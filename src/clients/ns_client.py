@@ -1,8 +1,9 @@
 import requests
 from datetime import datetime
+import json
 
-from app.config.settings import Settings
-from app.models.departure_event import DepartureEvent
+from src.config.settings import Settings
+from src.models.departure_event import DepartureEvent
 
 
 class NSClient:
@@ -27,7 +28,10 @@ class NSClient:
 
         response.raise_for_status()
 
-        return response.json()
+        payload = response.json()
+
+        return payload
+
 
     def _create_departure(
         self,
@@ -59,7 +63,7 @@ class NSClient:
 
         departures = []
 
-        for departure_data in payload["departures"]:
+        for departure_data in payload["payload"]["departures"]:
             event = self._create_departure(
                 departure_data,
                 station,
