@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 class Settings:
     def __init__(self):
         self.ns_api_url = os.getenv("NS_API_URL")
@@ -20,6 +21,22 @@ class Settings:
             "EVENTHUB_CONNECTION_STRING"
         )
 
-        self.eventhub_name = os.getenv("EVENTHUB_NAME")
+        self.eventhub_name = os.getenv(
+            "EVENTHUB_NAME"
+        )
 
-        self.log_level = os.getenv("LOG_LEVEL", "INFO")
+        self.retry_total = int(
+            os.getenv("RETRY_TOTAL", 3)
+        )
+
+        self.retry_backoff_factor = float(
+            os.getenv("RETRY_BACKOFF_FACTOR", 0.8)
+        )
+
+        self.retry_mode = os.getenv(
+            "RETRY_MODE", "exponential"
+        )
+
+        self.log_level = os.getenv(
+            "LOG_LEVEL", "INFO"
+        )
